@@ -7,11 +7,18 @@ def create_game(player_name):
     data = {"player_name": player_name}
     response = requests.post(url, json=data)
     return response.json()
-
 def list_games():
     url = "http://localhost:8000/games"
     response = requests.get(url)
-    return response.json()
+    
+    # Verificar si la respuesta tiene el tipo de contenido correcto
+    if response.headers.get('content-type') == 'application/json':
+        return response.json()
+    else:
+        print("La respuesta del servidor no es JSON válido.")
+        return []
+
+
 
 def find_game_by_id(game_id):
     url = f"http://localhost:8000/games/{game_id}"
@@ -69,3 +76,16 @@ if __name__ == "__main__":
         print("Partida eliminada exitosamente")
     else:
         print("No se pudo eliminar la partida")
+
+
+
+def list_games():
+    url = "http://localhost:8000/games"
+    response = requests.get(url)
+    
+    # Verificar si la respuesta tiene el tipo de contenido correcto
+    if response.headers.get('content-type') == 'application/json':
+        return response.json()
+    else:
+        print("La respuesta del servidor no es JSON válido.")
+        return []
